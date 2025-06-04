@@ -35,3 +35,16 @@ On récupère les données météo correspondant à l’heure de midi
 Exemple de reponse:
 Température à midi : 16.3 °C
 Précipitation à midi : 0.0 mm
+-------
+Donnees de trafic routier:
+
+Ces données indiquent le nombre moyen de véhicules circulant chaque jour sur chaque tronçon de route.
+
+Le fichier utilisé contenait les mesures de trafic pour l’année 2019. 
+J’ai d’abord lu ce fichier en tenant compte du bon séparateur, puis j’ai filtré les données pour ne garder que celles correspondant à l’année 2019. J’ai ensuite extrait les colonnes nécessaires, en particulier le code du département et la valeur du TMJA pour chaque tronçon.
+
+Les lignes contenant des valeurs manquantes ont été supprimées afin de garantir la fiabilité des calculs. 
+Ensuite, j’ai regroupé les données par département et calculé la moyenne du TMJA pour chaque zone. Cela permet d’obtenir une estimation globale du trafic moyen par département, en s’appuyant sur l’ensemble des tronçons mesurés.
+
+Enfin, le résultat obtenu a été enregistré dans un nouveau fichier. 
+Ce tableau représente l’exposition potentielle au risque routier à travers le volume de véhicules circulant quotidiennement dans chaque département. Il pourra être utilisé par la suite pour être croisé avec d’autres données, comme les accidents ou la météo, afin de construire une analyse complète du risque routier en France.
