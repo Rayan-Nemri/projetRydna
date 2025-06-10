@@ -48,3 +48,19 @@ Ensuite, j’ai regroupé les données par département et calculé la moyenne d
 
 Enfin, le résultat obtenu a été enregistré dans un nouveau fichier. 
 Ce tableau représente l’exposition potentielle au risque routier à travers le volume de véhicules circulant quotidiennement dans chaque département. Il pourra être utilisé par la suite pour être croisé avec d’autres données, comme les accidents ou la météo, afin de construire une analyse complète du risque routier en France.
+Dans cette étape, nous avons préparé les données d'accidents de la route en France pour l’année 2019, à partir de trois fichiers sources : caractéristiques, usagers et véhicules.
+
+----
+Tout d’abord, nous avons chargé les trois fichiers CSV contenant les informations de chaque accident, les personnes impliquées et les véhicules concernés. Les fichiers ont été lus en spécifiant le bon encodage (latin1) et le séparateur de colonnes (;), tels qu’utilisés dans les jeux de données fournis par le gouvernement.
+
+Ensuite, nous avons nettoyé les champs de date. Les colonnes an, mois et jour ont été combinées pour former une colonne date au format standard datetime.
+
+Nous avons également traité les heures : la colonne hrmn (heure-minute) a été convertie en un format horaire lisible (HH:MM). Cela a permis d’ajouter une colonne heure au tableau, facilitant l’analyse temporelle des accidents.
+
+Puis, nous avons standardisé les conditions météorologiques : à partir des codes numériques présents dans la colonne atm, nous avons créé une colonne textuelle conditions_meteo avec des libellés explicites comme “Temps normal”, “Pluie légère”, ou “Neige”.
+
+Un filtrage a ensuite été appliqué pour ne conserver que les accidents corporels, c’est-à-dire les cas impliquant au moins un blessé. Ce filtrage se base sur la colonne grav (gravité).
+
+Une fois les données nettoyées, nous avons fusionné les trois sources. Les données des usagers ont été reliées aux caractéristiques des accidents via l’identifiant commun Num_Acc, puis les véhicules ont été ajoutés à partir de la clé composée de Num_Acc et num_veh.
+
+Enfin, le jeu de données final, consolidé et propre, a été sauvegardé dans un nouveau fichier CSV. Ce fichier contient les informations complètes sur chaque accident, les usagers et les véhicules impliqués, dans un format prêt à l’analyse.
