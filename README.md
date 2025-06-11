@@ -64,3 +64,51 @@ Un filtrage a ensuite été appliqué pour ne conserver que les accidents corpor
 Une fois les données nettoyées, nous avons fusionné les trois sources. Les données des usagers ont été reliées aux caractéristiques des accidents via l’identifiant commun Num_Acc, puis les véhicules ont été ajoutés à partir de la clé composée de Num_Acc et num_veh.
 
 Enfin, le jeu de données final, consolidé et propre, a été sauvegardé dans un nouveau fichier CSV. Ce fichier contient les informations complètes sur chaque accident, les usagers et les véhicules impliqués, dans un format prêt à l’analyse.
+
+---- Analyse Exploratoire
+Cette étape vise à mieux comprendre les données d’accidents corporels en France sur l’année 2023. L’objectif est de repérer les tendances globales (périodes à risque, lieux, conditions météo, etc.) avant d’aller vers des analyses plus poussées.
+
+Nombre total d’accidents
+Le jeu de données contient 54 822 accidents corporels enregistrés en 2023.
+
+Répartition temporelle
+Les accidents ont été répartis sur toute l’année. On observe que :
+
+Le mois avec le plus d’accidents est Juin
+
+Le mois avec le moins d’accidents est Fevrier
+
+Cela peut s’expliquer par la meteo , la periode d'hiver les gens sont moins ammenees a prendre leur vehicule
+
+Répartition géographique
+Certains départements présentent un nombre plus élevé d’accidents :
+
+Paris , Seine-Saint-Denis , plus globalement l'Ile de France et les Bouches du Rhone   arrivent en tête.
+
+Les départements les moins touchés sont le 90 ainsi que les DOM-TOM
+
+Cela peut refléter à la fois la densité de population et le volume de trafic.
+
+Conditions météorologiques
+La majorité des accidents ont lieu par temps normal(98463), mais on recense aussi :
+
+14974 en pluie légère (atm = 2)
+
+3437 en pluie forte (atm = 3)
+
+2180 en brouillard ou fumée (atm = 7)
+
+Cela montre que même en bonne météo, le risque reste élevé (car plus de circulation).
+
+Conditions de luminosité
+Les accidents se produisent principalement :
+
+en pleine journee (82 988)
+
+Mais aussi en nuit avec éclairage public éteint (19367)
+
+Agglomération
+Une forte majorité des accidents se produisent en hors agglomeration.
+
+✅ Bilan
+Cette première analyse exploratoire met en évidence plusieurs facteurs de répartition spatiale et temporelle des accidents. Elle permet de poser les bases pour les étapes suivantes du projet, notamment le croisement avec les données météo précises et les indicateurs d’exposition au risque (trafic, parc automobile...).
