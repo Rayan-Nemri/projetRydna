@@ -112,3 +112,63 @@ Une forte majorité des accidents se produisent en hors agglomeration.
 
 ✅ Bilan
 Cette première analyse exploratoire met en évidence plusieurs facteurs de répartition spatiale et temporelle des accidents. Elle permet de poser les bases pour les étapes suivantes du projet, notamment le croisement avec les données météo précises et les indicateurs d’exposition au risque (trafic, parc automobile...).
+
+
+
+
+### Modélisation du nombre d'accidents avec un GLM Poisson
+
+Nous avons entraîné un modèle Poisson en prenant en compte une exposition basée sur le nombre d’usagers dans chaque département.
+
+Les variables explicatives sélectionnées ont été :
+- `lum_moy`, `int_moy`, `col_moy` : conditions de circulation
+- `meteo_pluie` : condition météo binaire (pluie vs sec)
+- `age_moyen_usager_std`, `catv_moyen_std` : versions standardisées des variables continues
+
+Le modèle Poisson utilise une fonction de lien logarithmique, permettant une interprétation directe des coefficients en termes de multiplicateurs de risque.
+
+### Résultats
+
+Les coefficients estimés permettent d’identifier les facteurs influençant significativement le taux d’accidents. Par exemple :
+- Un effet positif de la météo pluvieuse pourrait indiquer une augmentation du risque d’accidents sous la pluie.
+- Un coefficient négatif pour `col_moy` indiquerait une diminution du risque selon le type de collision moyen.
+
+Ce type de modèle permet ainsi de quantifier et d'interpréter l’effet marginal de chaque variable sur le risque, tout en tenant compte de l’exposition.
+
+
+### Analyse critique du modèle et pistes d’amélioration
+
+Le modèle GLM Poisson entraîné fournit une première estimation du risque d'accident par département. Toutefois, plusieurs **limites** ont été identifiées :
+
+#### 1. Prédicteurs non significatifs
+Plusieurs variables explicatives (comme `lum_moy`, `int_moy`, `col_moy`) ne sont pas significatives statistiquement. Cela peut s'expliquer par :
+- Une trop grande homogénéité entre départements (peu de variabilité).
+- Une agrégation trop forte des données (moyennes peu informatives).
+- Une mauvaise codification (traitement linéaire de variables qualitatives).
+
+#### 2. Manque d’interactions
+Certaines **interactions entre variables** importantes n’ont pas encore été testées. Par exemple :
+- Interaction entre météo (`meteo_pluie`) et type de collision (`col_moy`)
+- Interaction entre type de route (`int_moy`) et densité de trafic
+
+Ces effets croisés pourraient expliquer des variations de risque non captées par les effets simples.
+
+#### 3. Variables potentiellement manquantes
+Le modèle pourrait être amélioré par l'ajout de variables explicatives comme :
+- Densité de population ou densité de circulation
+- Proportion de zones urbaines vs rurales
+- Nombre moyen de kilomètres parcourus
+- Conditions de visibilité
+- Données comportementales (alcool, vitesse)
+
+#### 4. Améliorations futures possibles
+- Ré-encodage des variables catégorielles par classes ou regroupements plus pertinents
+- Passage à un modèle binomial négatif (déjà testé) ou à un modèle avec interactions
+- Sélection automatique de variables via AIC ou tests pas-à-pas
+- Validation croisée (CV) pour évaluer la robustesse du modèle sur différents sous-ensembles
+
+### Prédictions vs Réalité
+
+La comparaison entre les nombres d'accidents observés et les prédictions du modèle montre une bonne correspondance dans la majorité des départements. Les écarts absolus restent modérés (ex. : 382 réels vs 389 prédits). Cela suggère une bonne capacité du modèle à capturer la tendance générale du risque d’accident, bien que des ajustements fins restent possibles pour certains départements.
+
+Des métriques globales comme la MAE et la RMSE confirment cette précision globale. Une amélioration ultérieure pourrait inclure des effets d’interaction ou une segmentation par type de département.
