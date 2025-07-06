@@ -172,3 +172,50 @@ Le modèle pourrait être amélioré par l'ajout de variables explicatives comme
 La comparaison entre les nombres d'accidents observés et les prédictions du modèle montre une bonne correspondance dans la majorité des départements. Les écarts absolus restent modérés (ex. : 382 réels vs 389 prédits). Cela suggère une bonne capacité du modèle à capturer la tendance générale du risque d’accident, bien que des ajustements fins restent possibles pour certains départements.
 
 Des métriques globales comme la MAE et la RMSE confirment cette précision globale. Une amélioration ultérieure pourrait inclure des effets d’interaction ou une segmentation par type de département.
+
+Dans cette partie, j’ai développé un modèle de Random Forest Regressor pour prédire le nombre d’accidents. Contrairement au GLM (modèle linéaire utilisé précédemment), la Random Forest permet de capturer des relations non linéaires et des interactions complexes entre les variables.
+
+🔧 Données et préparation
+J’ai réutilisé le jeu de données préparé pour le GLM (df_modele). Celui-ci contient différentes variables explicatives moyennées ou agrégées par unité géographique (département ou commune).
+Parmi les variables utilisées :
+
+nombre_usagers (nombre total d’usagers impliqués),
+
+catv_moyen (catégorie moyenne des véhicules),
+
+lum_moy, atm_moy, int_moy (conditions moyennes de luminosité, météo, intersection),
+
+et des variables géographiques encodées (dep_75, dep_69, etc.).
+
+La cible du modèle est nombre_accidents.
+
+⚙️ Entraînement du modèle
+J’ai utilisé RandomForestRegressor de scikit-learn avec les paramètres par défaut (100 arbres, profondeur maximale automatique).
+Les données ont été séparées en 80% pour l’entraînement et 20% pour le test.
+
+📊 Résultats obtenus
+Le modèle a donné les performances suivantes :
+
+MAE (erreur absolue moyenne) : 35.41
+
+RMSE (erreur quadratique moyenne) : 69.35
+
+R² (coefficient de détermination) : 0.98
+
+Ces résultats montrent une meilleure performance que le GLM utilisé précédemment. La Random Forest permet de mieux prédire le nombre d’accidents, avec une erreur plus faible et un meilleur ajustement.
+
+🔍 Analyse des variables importantes
+Le modèle permet aussi d’identifier les variables qui influencent le plus les prédictions.
+D’après l’analyse des importances, la variable la plus déterminante est nombre_usagers, suivie de certaines variables géographiques (dep_75) et du type de véhicule (catv_moyen).
+Les variables environnementales comme la luminosité ou la météo ont un poids beaucoup plus faible.
+
+📈 Interprétation visuelle – PDP
+Pour mieux comprendre l’effet de certaines variables, j’ai tracé des courbes de dépendance partielle.
+Ces courbes montrent que :
+
+Le nombre d’usagers a un effet très fort et croissant sur le risque d’accidents.
+
+D’autres variables comme la météo ou l’intersection ont peu d’effet direct sur la prédiction.
+
+✅ Conclusion
+Le modèle Random Forest s’est révélé beaucoup plus performant que le GLM pour prédire le nombre d’accidents. Il met en avant l’importance du trafic (via nombre_usagers) comme facteur clé, et permet une meilleure compréhension des relations non linéaires dans les données.
